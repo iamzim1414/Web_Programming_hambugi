@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "부기김밥",
+    "address": "서울시 강남구 어딘가 123",
+    "phone": "010-1234-5678",
+    "hours": "10:00~21:00",
+    "menu": [
+      {"name": "참치김밥", "price": "4000", "img": "img/tuna.jpg"},
+      {"name": "치즈김밥", "price": "4500", "img": "img/cheese.jpg"}
+    ],
+    "rating": 4.5,
+    "reviews": [
+      {"name": "민수", "score": 5, "content": "정말 맛있어요!"}
+    ],
+    "tags": ["senior", "friend", "ENTP", "alone"]
+  }
+]

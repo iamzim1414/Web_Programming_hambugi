@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>밥부기</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <h1> 밥부기</h1>
+    
+<div class="container">
+  <input type="text" id="searchInput" placeholder="먹고 싶은 음식이나 가게 이름을 검색하세요">
+  <button class="blue-btn" onclick="searchRestaurant()">🔍 검색</button>
+
+  <div id="searchResults" class="restaurant-list"></div>
+</div>
+
+    <br>
+    <button id="randomBtn">랜덤 메뉴 추천받기</button>
+  </header>
+
+  <main>
+  
+
+    <section class="group-section">
+      <h2 style="text-align: center;">누구랑 먹나요?</h2>
+      <div class="group-buttons">
+        <button class="group-btn" data-group="senior">선배</button>
+        <button class="group-btn" data-group="friend">동기</button>
+        <button class="group-btn" data-group="alone">혼자</button>
+        <button class="group-btn" data-group="junior">후배</button>
+      </div>
+    </section>
+
+    <section class="mbti-section">
+      <h2>MBTI로 추천받기</h2>
+      <input type="text" id="mbtiInput" placeholder="MBTI를 입력하세요" maxlength="4" />
+      <button id="mbtiBtn">추천 받기</button>
+    </section>
+
+    <div id="loading" class="hidden">🐢 부기가 맛집을 고르는 중이에요...</div>
+    <div id="resultList"></div>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
