@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>맛집 검색기</title>
+  <style>
+    body { font-family: sans-serif; max-width: 1200px; margin: auto; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #f8f8f8; }
+    input { padding: 6px; width: 300px; margin-right: 10px; }
+    button { padding: 6px 12px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h2>맛집 검색기</h2>
+  <label for="location">지역명:</label>
+  <input type="text" id="location" placeholder="예: 성북구">
+  <button onclick="searchRestaurants()">맛집 검색</button>
+  <button onclick="downloadCSV()">CSV 저장</button>
+
+  <table id="results">
+    <thead>
+      <tr>
+        <th>상호명</th>
+        <th>주소</th>
+        <th>전화번호</th>
+        <th>카테고리</th>
+        <th>평점</th>
+        <th>리뷰수</th>
+        <th>대표 리뷰</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="7">검색 결과가 여기에 표시됩니다.</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    let searchResults = []; // 검색 결과 전역 저장
+
+    async function searchRestaurants() {
+      const location = document.getElementById('location').value;
+      const tbody = document.querySelector('#results tbody');
+      if (!location) {
+        alert('지역명을 입력해주세요.');
+        return;
+      }
+      tbody.innerHTML = '<tr><td colspan="7">검색 중...</td></tr>';
+      searchResults = [];
+
+      const headers = {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': navigator.userAgent
+      };
+
+      const formData = new URLSearchParams({
+        query: location,
+        order: 'r_score',
+        search_type: 'poi_search',
+        lat: '37.3096448',
+        lng: '127.074304',
+        mode: 'poi',
+        dc_flag: '1',
+        page: '1',
+        size: '20'
+      });
+
+      try {
+        const response = await fetch('https://im.diningcode.com/API/isearch/', {
+          method: 'POST',
+          headers: headers,
+          body: formData.toString()
+        });
+
+        const json = await response.json();
+        const list = json.result_data?.poi_section?.list || [];
+
+        if (list.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7">결과가 없습니다.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        searchResults = list;
+        list.forEach(item => {
+          const row = `
+            <tr>
+              <td>${item.nm}</td>
+              <td>${item.road_addr}</td>
+              <td>${item.phone || '정보없음'}</td>
+              <td>${item.category}</td>
+              <td>${item.user_score}</td>
+              <td>${item.review_cnt}</td>
+              <td>${item.display_review?.review_cont || ''}</td>
+            </tr>
+          `;
+          tbody.innerHTML += row;
+        });
+      } catch (error) {
+        tbody.innerHTML = '<tr><td colspan="7">데이터 로드 중 오류가 발생했습니다.</td></tr>';
+        console.error(error);
+      }
+    }
+
+    function downloadCSV() {
+      if (searchResults.length === 0) {
+        alert("먼저 검색을 해주세요!");
+        return;
+      }
+
+      const location = document.getElementById('location').value.trim();
+      const safeName = location.replace(/[^a-zA-Z0-9가-힣]/g, "_");  // 파일명 안전하게
+
+      const header = ["상호명", "주소", "전화번호", "카테고리", "평점", "리뷰수", "대표 리뷰"];
+      const csvRows = [header.join(",")];
+
+      searchResults.forEach(item => {
+        const row = [
+          `"${item.nm}"`,
+          `"${item.road_addr}"`,
+          `"${item.phone || '정보없음'}"`,
+          `"${item.category}"`,
+          item.user_score,
+          item.review_cnt,
+          `"${item.display_review?.review_cont || ''}"`
+        ];
+        csvRows.push(row.join(","));
+      });
+
+      const blob = new Blob([csvRows.join("\n")], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${safeName}_맛집검색결과.csv`;  // 검색어 포함한 파일명
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>
