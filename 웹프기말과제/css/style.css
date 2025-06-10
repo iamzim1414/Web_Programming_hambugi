@@ -1,38 +1,62 @@
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  color: #002E6E;
+  font-family: "Gowun Dodum", sans-serif;
 }
 
 header {
-  background-color: #002E6E;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+  background-color: #C7DFFF; /* ⬅️ 파스텔톤 연한 블루 */
+  color: #002E6E; /* 텍스트는 진한 파랑 유지 */
+  padding: 1rem 2rem;
+  text-align: left;
 }
 
+
+header h1 {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+
 input[type="text"] {
-  padding: 0.5rem;
-  margin-top: 1rem;
+  height: 44px; /* 버튼과 동일한 높이 */
+  padding: 0 1rem;
+  margin-top: 0rem;
   width: 80%;
   max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
+  font-size: 1rem;
 }
 
 button {
-  background-color: #AEC5E7;
-  color: #002E6E;
+  font-family: "Gowun Dodum", sans-serif;
+  height: 44px; /* input과 높이 맞춤 */
+  background-color: #002E6E;
+  color: white;
   border: none;
-  padding: 0.6rem 1.2rem;
+  padding: 0 1.2rem;
   margin: 0.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 1rem;
+  line-height: 1;
 }
+
+
 
 button:hover {
   background-color: #88aad7;
 }
+
+#randomBtn {
+  display: block;
+  margin: 0rem auto 2.5rem auto;  /* 위는 여유 있게, 아래는 적당히 */
+  font-size: 1rem;
+  height: 44px;
+  padding: 0 1.5rem;
+}
+
 
 .hidden {
   display: none;
@@ -61,9 +85,43 @@ button:hover {
 }
 
 .restaurant-item {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  border: none;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.restaurant-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+h1 {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 300;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 1.5rem 0 1rem 0;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.inline-babbugi {
+  width: 50px;
+  height: auto;
+}
+
