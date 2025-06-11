@@ -49,23 +49,18 @@
     .blue-btn {
       background-color: #002E6E;
       color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
     }
   </style>
 </head>
 
 <body>
-  <div id="restaurant-detail">
-    <h2 id="name"></h2>
-    <p><strong>주소:</strong> <span id="address"></span></p>
-    <p><strong>전화번호:</strong> <span id="phone"></span></p>
-    <p><strong>평점:</strong> <span id="rating"></span></p>
-    <p><strong>카테고리:</strong> <span id="category"></span></p>
-    <p><strong>대표 리뷰:</strong> <span id="review"></span></p>
-    <div id="tags" class="tags"></div>
-    <button id="more-link">가게 더 살펴보기</button>
-  </div>
+  <div class="detail-container" id="restaurantDetail"></div>
 
-  <script src="detail.js"></script>
-</body>
-
+  <script src="js/detail.js"></script>
 </html>
