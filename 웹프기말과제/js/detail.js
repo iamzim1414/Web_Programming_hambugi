@@ -28,9 +28,9 @@ fetch("data/restaurants.json")
         </div>
       `).join("")}
 
-      <h2>⭐ 사용자 리뷰 (${restaurant.reviews.length})</h2>
+      <h2>⭐ 사용자 리뷰 (${(restaurant.reviews?.length || 0)})</h2>
       <div id="reviews">
-        ${restaurant.reviews.map(r => `
+        ${(restaurant.reviews || []).map (r => `
           <div class="review">
             <strong>${r.name}</strong> - ⭐ ${r.score}<br>
             ${r.content}
