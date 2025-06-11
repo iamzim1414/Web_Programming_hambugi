@@ -123,6 +123,17 @@ function searchRestaurant() {
     });
 }
 
+function goToDetail(id) {
+  if (!id) {
+    console.error("상세 페이지로 이동할 ID가 없습니다.");
+    return;
+  }
+
+
+  // detail.html로 이동
+  location.href = `detail.html?id=${id}`;
+}
+
 // 엔터 키로 검색 실행
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
