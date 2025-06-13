@@ -14,16 +14,128 @@ document.querySelectorAll(".group-btn").forEach(btn => {
   });
 });
 
-//mbti확인
+// MBTI 드롭다운 관련 코드
+const validMbti = [
+  "ISTJ", "ISFJ", "INFJ", "INTJ",
+  "ISTP", "ISFP", "INFP", "INTP",
+  "ESTP", "ESFP", "ENFP", "ENTP",
+  "ESTJ", "ESFJ", "ENFJ", "ENTJ"
+];
+
+// MBTI 드롭다운 생성
+function createMbtiDropdown() {
+  const mbtiInput = document.getElementById("mbtiInput");
+  const mbtiSection = document.querySelector(".mbti-section");
+  
+  // 드롭다운 컨테이너 생성
+  const dropdownContainer = document.createElement("div");
+  dropdownContainer.className = "mbti-dropdown-container";
+  dropdownContainer.style.cssText = `
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    width: 320px;
+    z-index: 1000;
+    overflow: hidden;
+  `;
+  
+  // MBTI 옵션들 추가
+  validMbti.forEach(mbti => {
+    const option = document.createElement("div");
+    option.className = "mbti-option";
+    option.textContent = mbti;
+    option.style.cssText = `
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      color: #333;
+      font-weight: 500;
+    `;
+    
+    // 마우스 호버 효과
+    option.addEventListener("mouseenter", () => {
+      option.style.backgroundColor = "#e8f0ff";
+      option.style.color = "#002E6E";
+    });
+    
+    option.addEventListener("mouseleave", () => {
+      option.style.backgroundColor = "white";
+      option.style.color = "#333";
+    });
+    
+    // 클릭시 선택
+    option.addEventListener("click", () => {
+      mbtiInput.value = mbti;
+      dropdownContainer.style.display = "none";
+      // 선택 후 바로 추천 받기
+      document.getElementById("mbtiBtn").click();
+    });
+    
+    dropdownContainer.appendChild(option);
+  });
+  
+  // 드롭다운을 입력창 아래에 위치시키기
+  mbtiSection.style.position = "relative";
+  mbtiSection.appendChild(dropdownContainer);
+  
+  // 입력창 클릭시 드롭다운 표시
+  mbtiInput.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const rect = mbtiInput.getBoundingClientRect();
+    const parentRect = mbtiSection.getBoundingClientRect();
+    dropdownContainer.style.top = (rect.bottom - parentRect.top + 5) + "px";
+    dropdownContainer.style.left = (rect.left - parentRect.left) + "px";
+    dropdownContainer.style.display = "grid";
+  });
+  
+  // 입력창 포커스시에도 드롭다운 표시
+  mbtiInput.addEventListener("focus", (e) => {
+    e.stopPropagation();
+    const rect = mbtiInput.getBoundingClientRect();
+    const parentRect = mbtiSection.getBoundingClientRect();
+    dropdownContainer.style.top = (rect.bottom - parentRect.top + 5) + "px";
+    dropdownContainer.style.left = (rect.left - parentRect.left) + "px";
+    dropdownContainer.style.display = "grid";
+  });
+  
+  // 다른 곳 클릭시 드롭다운 숨기기
+  document.addEventListener("click", (e) => {
+    if (!mbtiSection.contains(e.target)) {
+      dropdownContainer.style.display = "none";
+    }
+  });
+  
+  // 입력창에 입력시 필터링
+  mbtiInput.addEventListener("input", (e) => {
+    const value = e.target.value.toUpperCase();
+    const options = dropdownContainer.querySelectorAll(".mbti-option");
+    
+    options.forEach(option => {
+      if (option.textContent.includes(value)) {
+        option.style.display = "block";
+      } else {
+        option.style.display = "none";
+      }
+    });
+    
+    // 입력이 있으면 드롭다운 표시
+    if (value) {
+      dropdownContainer.style.display = "grid";
+    }
+  });
+}
+
+// MBTI 확인
 document.getElementById("mbtiBtn").addEventListener("click", () => {
   const mbti = document.getElementById("mbtiInput").value.trim().toUpperCase();
-
-  const validMbti = [
-    "ISTJ", "ISFJ", "INFJ", "INTJ",
-    "ISTP", "ISFP", "INFP", "INTP",
-    "ESTP", "ESFP", "ENFP", "ENTP",
-    "ESTJ", "ESFJ", "ENFJ", "ENTJ"
-  ];
 
   if (!validMbti.includes(mbti)) {
     alert("유효한 MBTI를 입력하세요 (예: INFP, ESTJ 등)");
@@ -145,9 +257,12 @@ document.addEventListener("DOMContentLoaded", () => {
       searchRestaurant();
     }
   });
+  
+  // MBTI 드롭다운 초기화
+  createMbtiDropdown();
 });
 
-//엔터 키로 mbti입력받음
+// 엔터 키로 mbti입력받음
 document.addEventListener("DOMContentLoaded", () => {
   const mbtiInput = document.getElementById("mbtiInput");
   mbtiInput.addEventListener("keydown", (event) => {

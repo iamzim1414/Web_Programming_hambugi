@@ -89,40 +89,89 @@
     }
 
     .header-section {
-  display: flex;
-  align-items: center; /* 이미지와 텍스트를 세로 가운데 정렬 */
-  gap: 20px;
-  margin-bottom: 20px;
-}
+    display: flex;
+    align-items: center; /* 이미지와 텍스트를 세로 가운데 정렬 */
+    gap: 20px;
+    margin-bottom: 20px;
+    /* 메뉴 그리드 스타일 추가 */
+    }
+    
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 1rem 2rem;
+      margin-top: 1rem;
+    }
 
-.restaurant-info h1 {
-  margin: 0;
-  font-size: 2.5rem;
-  margin-right: 70px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  background-color: white;
-  color: black;
-}
+    .menu-card {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      color: #000;
+    }
 
-.restaurant-info p {
-  margin: 4px 0;
-}
-.close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: transparent;
-  color: #888;
-  font-size: 1.5rem;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-}
+    .menu-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
-.close-btn:hover {
-  color: #000;
-}
+    .menu-card strong {
+      display: block;
+      color: #002E6E;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card .price {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+
+    @media (max-width: 768px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    .restaurant-info h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      margin-right: 70px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      background-color: white;
+      color: black;
+    }
+
+    .restaurant-info p {
+      margin: 4px 0;
+    }
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      color: #888;
+      font-size: 1.5rem;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
 
   </style>
 </head>
