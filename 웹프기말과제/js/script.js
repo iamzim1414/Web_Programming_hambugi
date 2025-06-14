@@ -200,6 +200,9 @@ function showList(filter) {
 
 // 키워드로 식당 검색
 function searchRestaurant() {
+  // 검색 시 MBTI 섹션 숨김
+  const mbtiSection = document.querySelector(".mbti-section");
+  if (mbtiSection) mbtiSection.classList.add("hidden");
   const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
   const resultContainer = document.getElementById("searchResults");
 
