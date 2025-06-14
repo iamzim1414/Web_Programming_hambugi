@@ -1,20 +1,22 @@
+// 랜덤 메뉴 추천 버튼 클릭 시 실행
 document.getElementById("randomBtn").addEventListener("click", () => {
   showLoading(() => {
-    const randId = Math.floor(Math.random() * 5) + 1;
-    location.href = `detail.html?id=${randId}`;
+    const randId = Math.floor(Math.random() * 5) + 1; // ID 1~5 중 랜덤 선택
+    location.href = `detail.html?id=${randId}`;       // 상세 페이지로 이동
   });
 });
 
+// 그룹 버튼 클릭 시 그룹별 식당 필터링
 document.querySelectorAll(".group-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     showLoading2(() => {
       const group = btn.dataset.group;
-      showList(group);
+      showList(group); // 그룹 필터 전달
     });
   });
 });
 
-// MBTI 드롭다운 관련 코드
+// 유효한 MBTI 목록
 const validMbti = [
   "ISTJ", "ISFJ", "INFJ", "INTJ",
   "ISTP", "ISFP", "INFP", "INTP",
@@ -22,12 +24,12 @@ const validMbti = [
   "ESTJ", "ESFJ", "ENFJ", "ENTJ"
 ];
 
-// MBTI 드롭다운 생성
+// MBTI 드롭다운 생성 함수
 function createMbtiDropdown() {
   const mbtiInput = document.getElementById("mbtiInput");
   const mbtiSection = document.querySelector(".mbti-section");
-  
-  // 드롭다운 컨테이너 생성
+
+  // 드롭다운 컨테이너 요소 생성
   const dropdownContainer = document.createElement("div");
   dropdownContainer.className = "mbti-dropdown-container";
   dropdownContainer.style.cssText = `
@@ -43,8 +45,8 @@ function createMbtiDropdown() {
     z-index: 1000;
     overflow: hidden;
   `;
-  
-  // MBTI 옵션들 추가
+
+  // MBTI 항목 생성 및 이벤트 연결
   validMbti.forEach(mbti => {
     const option = document.createElement("div");
     option.className = "mbti-option";
@@ -59,34 +61,31 @@ function createMbtiDropdown() {
       color: #333;
       font-weight: 500;
     `;
-    
-    // 마우스 호버 효과
+
     option.addEventListener("mouseenter", () => {
       option.style.backgroundColor = "#e8f0ff";
       option.style.color = "#002E6E";
     });
-    
+
     option.addEventListener("mouseleave", () => {
       option.style.backgroundColor = "white";
       option.style.color = "#333";
     });
-    
-    // 클릭시 선택
+
     option.addEventListener("click", () => {
       mbtiInput.value = mbti;
       dropdownContainer.style.display = "none";
-      // 선택 후 바로 추천 받기
-      document.getElementById("mbtiBtn").click();
+      document.getElementById("mbtiBtn").click(); // 선택 후 자동 검색
     });
-    
+
     dropdownContainer.appendChild(option);
   });
-  
-  // 드롭다운을 입력창 아래에 위치시키기
+
+  // 드롭다운 위치 설정 및 화면에 추가
   mbtiSection.style.position = "relative";
   mbtiSection.appendChild(dropdownContainer);
-  
-  // 입력창 클릭시 드롭다운 표시
+
+  // 입력창 클릭 시 드롭다운 위치 계산 및 표시
   mbtiInput.addEventListener("click", (e) => {
     e.stopPropagation();
     const rect = mbtiInput.getBoundingClientRect();
@@ -95,8 +94,8 @@ function createMbtiDropdown() {
     dropdownContainer.style.left = (rect.left - parentRect.left) + "px";
     dropdownContainer.style.display = "grid";
   });
-  
-  // 입력창 포커스시에도 드롭다운 표시
+
+  // 포커스 시 드롭다운 표시
   mbtiInput.addEventListener("focus", (e) => {
     e.stopPropagation();
     const rect = mbtiInput.getBoundingClientRect();
@@ -105,35 +104,30 @@ function createMbtiDropdown() {
     dropdownContainer.style.left = (rect.left - parentRect.left) + "px";
     dropdownContainer.style.display = "grid";
   });
-  
-  // 다른 곳 클릭시 드롭다운 숨기기
+
+  // 외부 클릭 시 드롭다운 숨김
   document.addEventListener("click", (e) => {
     if (!mbtiSection.contains(e.target)) {
       dropdownContainer.style.display = "none";
     }
   });
-  
-  // 입력창에 입력시 필터링
+
+  // 입력한 텍스트로 필터링
   mbtiInput.addEventListener("input", (e) => {
     const value = e.target.value.toUpperCase();
     const options = dropdownContainer.querySelectorAll(".mbti-option");
-    
+
     options.forEach(option => {
-      if (option.textContent.includes(value)) {
-        option.style.display = "block";
-      } else {
-        option.style.display = "none";
-      }
+      option.style.display = option.textContent.includes(value) ? "block" : "none";
     });
-    
-    // 입력이 있으면 드롭다운 표시
+
     if (value) {
       dropdownContainer.style.display = "grid";
     }
   });
 }
 
-// MBTI 확인
+// MBTI 추천 버튼 클릭 시 유효성 검사 후 실행
 document.getElementById("mbtiBtn").addEventListener("click", () => {
   const mbti = document.getElementById("mbtiInput").value.trim().toUpperCase();
 
@@ -147,30 +141,33 @@ document.getElementById("mbtiBtn").addEventListener("click", () => {
   });
 });
 
+// 로딩 효과 함수 1
 function showLoading(callback) {
   const loading = document.getElementById("loading");
   loading.classList.add("hidden");
   setTimeout(() => {
-  loading.classList.remove("hidden");
-   setTimeout(() => {
-     loading.classList.add("hidden");
-     callback();
-   }, 1500);
-  },50);
+    loading.classList.remove("hidden");
+    setTimeout(() => {
+      loading.classList.add("hidden");
+      callback();
+    }, 1500);
+  }, 50);
 }
 
+// 로딩 효과 함수 2
 function showLoading2(callback) {
   const loading2 = document.getElementById("loading2");
   loading2.classList.add("hidden");
   setTimeout(() => {
-  loading2.classList.remove("hidden");
-   setTimeout(() => {
-     loading2.classList.add("hidden");
-     callback();
-   }, 1500);
-  },50);
+    loading2.classList.remove("hidden");
+    setTimeout(() => {
+      loading2.classList.add("hidden");
+      callback();
+    }, 1500);
+  }, 50);
 }
 
+// 필터 조건에 따라 식당 목록 표시
 function showList(filter) {
   const groupMap = {
     senior: "선배",
@@ -189,20 +186,19 @@ function showList(filter) {
 
       filtered.forEach(item => {
         const div = document.createElement("div");
-       div.innerHTML = `
-        <img src="${item.image1 && item.image1.trim() !== '' ? item.image1 : 'images/부기1.png'}" alt="${item.name}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 0.5rem;">
-        <strong>${item.name}</strong><br>
-        ${item.address}<br>
-        <button onclick="location.href='detail.html?id=${item.id}'">자세히 보기</button>
-      `;
-
+        div.innerHTML = `
+          <img src="${item.image1 && item.image1.trim() !== '' ? item.image1 : 'images/부기1.png'}" alt="${item.name}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 0.5rem;">
+          <strong>${item.name}</strong><br>
+          ${item.address}<br>
+          <button onclick="location.href='detail.html?id=${item.id}'">자세히 보기</button>
+        `;
         div.classList.add("result-card");
         container.appendChild(div);
       });
     });
 }
 
-
+// 키워드로 식당 검색
 function searchRestaurant() {
   const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
   const resultContainer = document.getElementById("searchResults");
@@ -228,7 +224,7 @@ function searchRestaurant() {
       }
 
       resultContainer.innerHTML = results.map(r => `
-        <div class="restaurant-item" style=" padding: 1rem 1rem 1rem 2rem; margin: 0.5rem; border-radius: 16px;">
+        <div class="restaurant-item" style="padding: 1rem 1rem 1rem 2rem; margin: 0.5rem; border-radius: 16px;">
           <h3>${r.name}</h3>
           <p>${r.address}</p>
           <button class="light-blue-btn" onclick="goToDetail(${r.id})">상세보기</button>
@@ -237,19 +233,18 @@ function searchRestaurant() {
     });
 }
 
+// 상세 페이지로 이동
 function goToDetail(id) {
   if (!id) {
     console.error("상세 페이지로 이동할 ID가 없습니다.");
     return;
   }
-
-
-  // detail.html로 이동
   location.href = `detail.html?id=${id}`;
 }
 
-// 엔터 키로 검색 실행
+// DOM 로드 후 이벤트 바인딩
 document.addEventListener("DOMContentLoaded", () => {
+  // 검색창에서 Enter 키 입력 시 검색
   const searchInput = document.getElementById("searchInput");
   searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
@@ -257,12 +252,12 @@ document.addEventListener("DOMContentLoaded", () => {
       searchRestaurant();
     }
   });
-  
+
   // MBTI 드롭다운 초기화
   createMbtiDropdown();
 });
 
-// 엔터 키로 mbti입력받음
+// MBTI 입력창에서 Enter 입력 시 추천 실행
 document.addEventListener("DOMContentLoaded", () => {
   const mbtiInput = document.getElementById("mbtiInput");
   mbtiInput.addEventListener("keydown", (event) => {
