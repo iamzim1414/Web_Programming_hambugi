@@ -4,42 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>밥부기</title>
+
+  <!-- 폰트 사전 연결 및 불러오기 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- 외부 CSS 파일 연결 -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
+  <!-- 페이지 헤더 영역 -->
   <header>
+    <!-- 사이트 로고 및 제목 -->
     <h1> 밥부기</h1>
     
-<div class="container">
-  <div class="search-box">
-    <img id="serchIcon" src="images/부기2.png" alt="부기 캐릭터" class="inline-babbugi" style="cursor: pointer;">
-    <input type="text" id="searchInput" placeholder="먹고 싶은 음식이나 가게 이름을 검색하세요">
-    <button class="blue-btn" onclick="searchRestaurant()">🔍 검색</button>
-  </div>
-  <div id="searchResults" class="restaurant-list"></div>
-</div>
+    <!-- 검색 기능 컨테이너 -->
+    <div class="container">
+      <div class="search-box">
+        <!-- 검색 아이콘 (클릭 가능) -->
+        <img id="serchIcon" src="images/부기2.png" alt="부기 캐릭터" class="inline-babbugi" style="cursor: pointer;">
+        <!-- 텍스트 검색 입력창 -->
+        <input type="text" id="searchInput" placeholder="먹고 싶은 음식이나 가게 이름을 검색하세요">
+        <!-- 검색 버튼 -->
+        <button class="blue-btn" onclick="searchRestaurant()">🔍 검색</button>
+      </div>
 
-
-    <br>
-    <button id="randomBtn">랜덤 메뉴 추천받기</button>
-
-    <div id="loading" class="hidden">
-      <div class="loading-row">
-       <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
-       <p>부기가 맛집을 고르는 중이에요...</p>
-       <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
-     </div>
+      <!-- 검색 결과 출력 영역 -->
+      <div id="searchResults" class="restaurant-list"></div>
     </div>
 
+    <br>
+
+    <!-- 랜덤 메뉴 추천 버튼 -->
+    <button id="randomBtn">랜덤 메뉴 추천받기</button>
+
+    <!-- 첫 번째 로딩 애니메이션 영역 -->
+    <div id="loading" class="hidden">
+      <div class="loading-row">
+        <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
+        <p>부기가 맛집을 고르는 중이에요...</p>
+        <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
+      </div>
+    </div>
   </header>
 
+  <!-- 본문 콘텐츠 -->
   <main>
-  
 
+    <!-- 그룹 선택 섹션 -->
     <section class="group-section">
       <h2 style="text-align: center;">누구랑 먹나요?</h2>
       <div class="group-buttons">
@@ -50,23 +64,27 @@
       </div>
     </section>
 
+    <!-- MBTI 입력 섹션 -->
     <section class="mbti-section">
       <h2>MBTI로 추천받기</h2>
       <input type="text" id="mbtiInput" placeholder="MBTI를 입력하세요" maxlength="4" />
       <button id="mbtiBtn">추천 받기</button>
     </section>
 
+    <!-- 두 번째 로딩 애니메이션 -->
     <div id="loading2" class="hidden">
       <div class="loading-row">
-       <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
-       <p>부기가 맛집을 고르는 중이에요...</p>
-       <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
-     </div>
+        <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
+        <p>부기가 맛집을 고르는 중이에요...</p>
+        <img src="images/부기3.png" alt="부기가 맛집을 고르는 중" class="loading-boogi">
+      </div>
     </div>
 
+    <!-- 최종 추천 결과 리스트 출력 영역 -->
     <div id="resultList"></div>
   </main>
 
+  <!-- 기능 동작용 JS 스크립트 로딩 -->
   <script src="js/script.js"></script>
 </body>
 </html>
