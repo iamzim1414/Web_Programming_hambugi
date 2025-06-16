@@ -1,7 +1,7 @@
 // 랜덤 메뉴 추천 버튼 클릭 시 실행
 document.getElementById("randomBtn").addEventListener("click", () => {
   showLoading(() => {
-    const randId = Math.floor(Math.random() * 5) + 1; // ID 1~5 중 랜덤 선택
+    const randId = Math.floor(Math.random() * 100) + 1; // ID 1~5 중 랜덤 선택
     location.href = `detail.html?id=${randId}`;       // 상세 페이지로 이동
   });
 });
